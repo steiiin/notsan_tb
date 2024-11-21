@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 
-import '../../models/home_item.dart';
-import 'widgets/home.menu_item.dart';
-
-import '../menus/menu.medications/page.menu.medications.dart';
+import 'package:notsan_tb/models/home_item.dart';
+import 'package:notsan_tb/widgets/list.separator.dart';
+import 'package:notsan_tb/pages/home/widgets/home.menu_item.dart';
+import 'package:notsan_tb/pages/menus/menu_medications/page.menu_medications.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -38,12 +38,7 @@ class HomePage extends StatelessWidget {
       body: ListView.separated(
         itemCount: menuItems.length,
         separatorBuilder: (context, index) {
-          return const Divider(
-            thickness: 0.5,
-            indent: 8.0,
-            endIndent: 8.0,
-            height: 0,
-          );
+          return const ListSeparator();
         },
         itemBuilder: (context, index) {
           final item = menuItems[index];

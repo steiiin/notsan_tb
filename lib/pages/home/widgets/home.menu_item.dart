@@ -1,7 +1,7 @@
 // lib/pages/home/widgets/home.menu_item.dart
 
 import 'package:flutter/material.dart';
-import '../../../models/home_item.dart';
+import 'package:notsan_tb/models/home_item.dart';
 
 class HomeMenuItem extends StatelessWidget {
   final HomeMenuItemModel item;

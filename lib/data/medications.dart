@@ -1,11 +1,15 @@
 // lib/data/medications.dart
 
-import '../models/medication.dart';
+import 'package:notsan_tb/models/med_indication.dart';
+import 'package:notsan_tb/models/medication.dart';
+
+const acs = IndicationModel(name: "Akutes Koronarsyndrom");
 
 const List<MedicationModel> medications = [
-  MedicationModel(title: 'Aspirin', ),
-  MedicationModel(title: 'Paracetamol', ),
-  MedicationModel(title: 'Ibuprofen', ),
-  MedicationModel(title: 'Amoxicillin', ),
-  MedicationModel(title: 'Metformin', ),
+
+  MedicationModel(
+    name: 'Acetylsalicylsäure', altnames: 'ASS, Aspirin, Aspisol', isDocMed: false,
+    indications: [ acs ],
+  ),
+
 ];
