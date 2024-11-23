@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:notsan_tb/models/medication.dart';
+import 'package:notsan_tb/pages/content/content_medication/widgets/med_contras.dart';
 import 'package:notsan_tb/pages/content/content_medication/widgets/med_indications.dart';
 import 'package:notsan_tb/widgets/card.expander.dart';
 
@@ -91,6 +92,7 @@ class ContentMedicationPage extends StatelessWidget {
             child: Column(
               children: [
                 MedIndications(indications: medication.indications),
+                MedContras(contras: medication.contras),
               ],
             )
           )

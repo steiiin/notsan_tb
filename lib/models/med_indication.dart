@@ -1,8 +1,8 @@
 // lib/models/indication.dart
 
-class IndicationModel {
+class Indication {
   final String name;
-  const IndicationModel({
+  const Indication({
     required this.name,
   });
 }

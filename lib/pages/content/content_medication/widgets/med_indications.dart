@@ -7,7 +7,7 @@ import 'package:notsan_tb/widgets/list.separator.dart';
 import 'package:notsan_tb/widgets/list.themed_tile.dart';
 
 class MedIndications extends StatelessWidget {
-  final List<IndicationModel> indications;
+  final List<Indication> indications;
   const MedIndications({ super.key,
     required this.indications
   });
