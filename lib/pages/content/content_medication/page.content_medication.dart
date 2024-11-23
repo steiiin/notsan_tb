@@ -1,56 +1,102 @@
 // lib/pages/content/content_medication/page.content_medication.dart
 
 import 'package:flutter/material.dart';
-import 'package:grouped_list/grouped_list.dart';
-import 'package:provider/provider.dart';
 import 'package:notsan_tb/models/medication.dart';
-import 'package:notsan_tb/providers/provider.medication.dart';
-import 'package:notsan_tb/widgets/list.groupheader.dart';
-import 'package:notsan_tb/widgets/list.separator.dart';
+import 'package:notsan_tb/pages/content/content_medication/widgets/med_indications.dart';
+import 'package:notsan_tb/widgets/card.expander.dart';
 
-class MenuMedicationsPage extends StatelessWidget {
-  const MenuMedicationsPage({super.key});
+class ContentMedicationPage extends StatelessWidget {
 
-  // Function to determine the group (first letter or '#')
-  String _getGroup(MedicationModel medication) {
-    final firstChar = medication.name[0].toUpperCase();
-    if (RegExp(r'[A-Z]').hasMatch(firstChar)) {
-      return firstChar;
-    }
-    return '#';
-  }
+  final MedicationModel medication;
+  const ContentMedicationPage({
+    super.key,
+    required this.medication,
+  });
 
   @override
   Widget build(BuildContext context) {
 
-    final medicationProvider = Provider.of<MedicationProvider>(context);
-    final List<MedicationModel> medications = medicationProvider.medications;
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Medikamente'),
-      ),
-      body: GroupedListView<MedicationModel, String>(
-        elements: medications,
-        groupBy: _getGroup,
-        groupSeparatorBuilder: (String groupByValue) => ListGroupHeader(headerValue: groupByValue),
-        separator: const ListSeparator(),
-        itemBuilder: (context, MedicationModel medication) {
-          return ListTile(
-            title: Text(medication.name),
-            subtitle: medication.altnames.isNotEmpty ? Text(medication.altnames) : null,
-            trailing: medication.isDocMed ? const Icon(Icons.taxi_alert) : null,
-            onTap: () {
-              // Handle tap
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('${medication.name} tapped')),
-              );
-            },
-          );
-        },
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            pinned: true,
+            expandedHeight: 64.0, // AppBar height remains fixed
+            flexibleSpace: SafeArea(
+              child: LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  // Calculate scroll progress: 1.0 when expanded, 0.0 when collapsed
+                  final double scrollProgress = (constraints.maxHeight - kToolbarHeight) /
+                      (64.0 - kToolbarHeight);
 
-        order: GroupedListOrder.ASC,
-      ),
+                  // Clamp progress between 0 and 1 for safe opacity calculation
+                  final double clampedProgress = scrollProgress.clamp(0.0, 1.0);
+
+                  return Stack(
+                    children: [
+                      // If subtitle is present, show title and subtitle (fades out on scroll)
+                      if (medication.altnames.isNotEmpty)
+                        Opacity(
+                          opacity: clampedProgress,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              left: 72.0, // Accounts for back arrow and padding
+                              right: 16.0,
+                            ),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    medication.name,
+                                    style: Theme.of(context).textTheme.titleLarge,
+                                  ),
+                                  Text(
+                                    medication.altnames,
+                                    style: Theme.of(context).textTheme.labelSmall,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      // Always show app bar title (fades in on scroll)
+                      Opacity(
+                        opacity: medication.altnames.isNotEmpty
+                            ? 1.0 - clampedProgress
+                            : 1.0, // Always visible if no subtitle
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            left: 72.0, // Accounts for back arrow and padding
+                            right: 16.0,
+                          ),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              medication.name,
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                MedIndications(indications: medication.indications),
+              ],
+            )
+          )
+        ],
+      )
     );
+
   }
 }

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
+import 'package:notsan_tb/pages/content/content_medication/page.content_medication.dart';
 import 'package:provider/provider.dart';
 import 'package:notsan_tb/models/medication.dart';
 import 'package:notsan_tb/providers/provider.medication.dart';
@@ -41,10 +42,7 @@ class MenuMedicationsPage extends StatelessWidget {
             subtitle: medication.altnames.isNotEmpty ? Text(medication.altnames) : null,
             trailing: medication.isDocMed ? const Icon(Icons.taxi_alert) : null,
             onTap: () {
-              // Handle tap
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('${medication.name} tapped')),
-              );
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ContentMedicationPage(medication: medication)));
             },
           );
         },
