@@ -44,7 +44,7 @@ class MedicationContentPageFrame extends MedicationContentPage {
 
       dosages.add(CardExpander(
         title: treatment.name,
-        icon: const Icon(Icons.add_box_outlined),
+        icon: const Icon(Icons.monitor_heart_outlined),
         child: widget
       ));
 
