@@ -1,17 +1,16 @@
-// lib/pages/content/content_medication/page.content_medication.dart
-
 import 'package:flutter/material.dart';
-import 'package:notsan_tb/models/medication.dart';
-import 'package:notsan_tb/pages/content/content_medication/widgets/med_contras.dart';
-import 'package:notsan_tb/pages/content/content_medication/widgets/med_indications.dart';
-import 'package:notsan_tb/widgets/card.expander.dart';
 
-class ContentMedicationPage extends StatelessWidget {
+class ContentPageFrame extends StatelessWidget {
 
-  final MedicationModel medication;
-  const ContentMedicationPage({
+  final String title;
+  final String subtitle;
+  final List<Widget> children;
+
+  const ContentPageFrame({
     super.key,
-    required this.medication,
+    required this.title,
+    this.subtitle = '',
+    required this.children,
   });
 
   @override
@@ -22,10 +21,11 @@ class ContentMedicationPage extends StatelessWidget {
         slivers: [
           SliverAppBar(
             pinned: true,
-            expandedHeight: 64.0, // AppBar height remains fixed
+            expandedHeight: 64.0,
             flexibleSpace: SafeArea(
               child: LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
+
                   // Calculate scroll progress: 1.0 when expanded, 0.0 when collapsed
                   final double scrollProgress = (constraints.maxHeight - kToolbarHeight) /
                       (64.0 - kToolbarHeight);
@@ -35,8 +35,9 @@ class ContentMedicationPage extends StatelessWidget {
 
                   return Stack(
                     children: [
+
                       // If subtitle is present, show title and subtitle (fades out on scroll)
-                      if (medication.altnames.isNotEmpty)
+                      if (subtitle.isNotEmpty)
                         Opacity(
                           opacity: clampedProgress,
                           child: Padding(
@@ -51,21 +52,24 @@ class ContentMedicationPage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    medication.name,
+                                    title,
                                     style: Theme.of(context).textTheme.titleLarge,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                   Text(
-                                    medication.altnames,
+                                    subtitle,
                                     style: Theme.of(context).textTheme.labelSmall,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ],
                               ),
                             ),
                           ),
                         ),
+
                       // Always show app bar title (fades in on scroll)
                       Opacity(
-                        opacity: medication.altnames.isNotEmpty
+                        opacity: subtitle.isNotEmpty
                             ? 1.0 - clampedProgress
                             : 1.0, // Always visible if no subtitle
                         child: Padding(
@@ -76,24 +80,23 @@ class ContentMedicationPage extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              medication.name,
+                              title,
                               style: Theme.of(context).textTheme.titleLarge,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ),
                       ),
                     ],
                   );
+
                 },
               ),
             ),
           ),
           SliverToBoxAdapter(
             child: Column(
-              children: [
-                MedIndications(indications: medication.indications),
-                MedContras(contras: medication.contras),
-              ],
+              children: children,
             )
           )
         ],
