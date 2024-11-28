@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:notsan_tb/data/medications.dart' as medications;
 import 'package:notsan_tb/data/treatments.dart' as treatments;
 import 'package:notsan_tb/models/content_medication.dart';
-import 'package:notsan_tb/models/content_treatment.dart';
 import 'package:notsan_tb/pages/content/medications/pageframe_medicationcontent.dart';
 import 'package:notsan_tb/pages/content/medications/widgets/list.contraindication_tile.dart';
-import 'package:notsan_tb/pages/content/medications/widgets/list.indication_tile.dart';
 import 'package:notsan_tb/pages/content/medications/widgets/list.sideeffect_tile.dart';
 import 'package:notsan_tb/pages/content/medications/widgets/list.sideeffect_countertreat.dart';
 import 'package:notsan_tb/widgets/list.separator.dart';
@@ -19,12 +17,10 @@ class MedAcetylsalicylPage extends MedicationContentPage {
 
     final String name = medications.acetylsalicyl.name;
     final String altnames = medications.acetylsalicyl.getAltnamesJoined();
-    final TreatmentContent treatment = medications.acetylsalicyl.treatment;
 
     return MedicationContentPageFrame(
       pageTitle: name,
       pageSubtitle: altnames,
-      listIndications: ListIndicationTile(treatment: treatment),
       listContraindications: const Column(
         children: [
           ListContraindicationTile(text: "**Unverträglichkeit** ggb. NSAR (z.B. Ibu, Diclo)", type: ListContraindicationTileType.intolerance),
@@ -55,7 +51,7 @@ class MedAcetylsalicylPage extends MedicationContentPage {
         ],
       ),
       mapDosages: const {
-        'Akutes Koronarsyndrom': Column(
+        treatments.acs: Column(
           children: [
             ListSeparator()
           ]

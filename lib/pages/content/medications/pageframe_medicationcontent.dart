@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:notsan_tb/models/content_medication.dart';
+import 'package:notsan_tb/models/content_treatment.dart';
 import 'package:notsan_tb/pages/content/medications/widgets/content.pharmakodynamics.dart';
 import 'package:notsan_tb/pages/content/medications/widgets/content.pharmakokinetik.dart';
+import 'package:notsan_tb/pages/content/medications/widgets/list.indication_tile.dart';
 import 'package:notsan_tb/pages/content/pageframe_content.dart';
 import 'package:notsan_tb/widgets/expander_card.dart';
 import 'package:notsan_tb/widgets/list.separator.dart';
@@ -11,10 +13,9 @@ class MedicationContentPageFrame extends MedicationContentPage {
   final String pageTitle;
   final String pageSubtitle;
 
-  final Widget listIndications;
   final Widget listContraindications;
   final Widget listSideeffects;
-  final Map<String, Widget> mapDosages;
+  final Map<TreatmentContent, Widget> mapDosages;
   final String pharmOnset;
   final String pharmDuration;
   final String principle;
@@ -22,7 +23,6 @@ class MedicationContentPageFrame extends MedicationContentPage {
   const MedicationContentPageFrame({ super.key,
     required this.pageTitle,
     required this.pageSubtitle,
-    required this.listIndications,
     required this.listContraindications,
     required this.listSideeffects,
     required this.mapDosages,
@@ -34,17 +34,22 @@ class MedicationContentPageFrame extends MedicationContentPage {
   @override
   Widget build(BuildContext context) {
 
+    final List<Widget> indications = [];
     final List<Widget> dosages = [];
-    mapDosages.forEach((name, widget) {
+    mapDosages.forEach((treatment, widget) {
 
       if (dosages.isNotEmpty) {
         dosages.add(const ListSeparator());
       }
 
       dosages.add(CardExpander(
-        title: name,
+        title: treatment.name,
         icon: const Icon(Icons.add_box_outlined),
         child: widget
+      ));
+
+      indications.add(ListIndicationTile(
+        treatment: treatment
       ));
 
     });
@@ -56,7 +61,9 @@ class MedicationContentPageFrame extends MedicationContentPage {
 
         CardExpander(
           title: 'Indikationen',
-          child: listIndications,
+          child: Column(
+            children: indications,
+          ),
         ),
         CardExpander(
           title: 'Kontraindikationen',

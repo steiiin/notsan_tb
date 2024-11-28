@@ -20,16 +20,15 @@ class ContentPharmacokinetics extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Table(
       columnWidths: const {
-        0: FlexColumnWidth(2),
-        1: FixedColumnWidth(8.0),
-        2: FlexColumnWidth(3),
+        0: FixedColumnWidth(120.0),
+        1: FlexColumnWidth(1),
       },
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       children: [
         TableRow(
           children: [
             const Align(
-              alignment: Alignment.centerRight,
+              alignment: Alignment.centerLeft,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -39,14 +38,13 @@ class ContentPharmacokinetics extends StatelessWidget {
                 ],
               ),
             ),
-            spacer,
             MarkdownBody(data: onset),
           ],
         ),
         TableRow(
           children: [
             const Align(
-              alignment: Alignment.centerRight,
+              alignment: Alignment.centerLeft,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -56,7 +54,6 @@ class ContentPharmacokinetics extends StatelessWidget {
                 ],
               ),
             ),
-            spacer,
             MarkdownBody(data: duration),
           ],
         ),
