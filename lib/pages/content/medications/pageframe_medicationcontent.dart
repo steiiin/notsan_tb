@@ -70,7 +70,7 @@ class MedicationContentPageFrame extends MedicationContentPage {
         ...dosages,
 
         CardExpander(
-          title: 'Pharmakokinetik',
+          title: 'Pharmakologie',
           child: Column(
             children: [
               ContentPharmacokinetics(
