@@ -3,6 +3,7 @@ import 'package:notsan_tb/models/content_medication.dart';
 import 'package:notsan_tb/models/content_treatment.dart';
 import 'package:notsan_tb/pages/content/medications/widgets/content.pharmakodynamics.dart';
 import 'package:notsan_tb/pages/content/medications/widgets/content.pharmakokinetik.dart';
+import 'package:notsan_tb/pages/content/medications/widgets/icon.treatment.dart';
 import 'package:notsan_tb/pages/content/medications/widgets/list.indication_tile.dart';
 import 'package:notsan_tb/pages/content/pageframe_content.dart';
 import 'package:notsan_tb/widgets/expander_card.dart';
@@ -44,7 +45,7 @@ class MedicationContentPageFrame extends MedicationContentPage {
 
       dosages.add(CardExpander(
         title: treatment.name,
-        icon: const Icon(Icons.monitor_heart_outlined),
+        icon: const TreatmentIcon(),
         child: widget
       ));
 
