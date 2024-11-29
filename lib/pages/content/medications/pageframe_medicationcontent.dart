@@ -39,10 +39,6 @@ class MedicationContentPageFrame extends MedicationContentPage {
     final List<Widget> dosages = [];
     mapDosages.forEach((treatment, widget) {
 
-      if (dosages.isNotEmpty) {
-        dosages.add(const ListSeparator());
-      }
-
       dosages.add(CardExpander(
         title: treatment.name,
         icon: const TreatmentIcon(),

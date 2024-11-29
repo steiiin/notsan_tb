@@ -3,6 +3,10 @@ import 'package:notsan_tb/data/medications.dart' as medications;
 import 'package:notsan_tb/data/treatments.dart' as treatments;
 import 'package:notsan_tb/models/content_medication.dart';
 import 'package:notsan_tb/pages/content/medications/pageframe_medicationcontent.dart';
+import 'package:notsan_tb/pages/content/medications/widgets/content.med_scheme.dart';
+import 'package:notsan_tb/pages/content/medications/widgets/content.med_package.dart';
+import 'package:notsan_tb/pages/content/medications/widgets/content.med_scheme_descriptive.dart';
+import 'package:notsan_tb/pages/content/medications/widgets/content.med_scheme_dosage.dart';
 import 'package:notsan_tb/pages/content/medications/widgets/list.contraindication_tile.dart';
 import 'package:notsan_tb/pages/content/medications/widgets/list.sideeffect_tile.dart';
 import 'package:notsan_tb/pages/content/medications/widgets/list.sideeffect_countertreat.dart';
@@ -53,7 +57,24 @@ class MedAcetylsalicylPage extends MedicationContentPage {
       mapDosages: const {
         treatments.acs: Column(
           children: [
-            ListSeparator()
+            ContentMedPackage(
+              type: MedicationPackageType.vialWithAmpoule,
+              title: "Durchstechflasche 'Aspirin'",
+              incredients:
+                "`500mg` Pulver \\\n"
+                "`+ 5ml` Wasser z. Aufziehen"
+            ),
+            ListSeparator(),
+            ContentMedScheme(
+              type: ContentMedSchemeType.iv,
+              children: [
+                MedSchemeDosage('500mg (½ Flasche)', target: ContentMedDosageTarget.adult),
+                ListSeparator(noIndent: true),
+                MedSchemeDescription(
+                  'Langsam spritzen.'
+                )
+              ]
+            ),
           ]
         ),
       },

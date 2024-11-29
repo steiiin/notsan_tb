@@ -28,3 +28,14 @@ class MedicationContentPage extends StatelessWidget {
   }
 
 }
+
+enum MedicationPackageType {
+  vialWithAmpoule,
+  singleVial,
+  syringe,
+  suppository,
+  spray,
+  inhaler,
+  doubleAmpoule,
+  singleAmpoule,
+}

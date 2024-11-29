@@ -17,7 +17,7 @@ class CardExpander extends StatefulWidget {
   const CardExpander({ super.key,
     required this.title,
     required this.child,
-    this.initiallyExpanded = true,
+    this.initiallyExpanded = false,
     this.icon,
     this.scrollController,
   });
