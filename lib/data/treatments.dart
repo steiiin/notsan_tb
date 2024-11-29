@@ -11,7 +11,25 @@ const anaphylaxie = TreatmentContent(
   fragmentDescription: Column() /* TODO: add content */
 );
 
+const bradycardia = TreatmentContent(
+  name: 'Instabile Bradykardie',
+  fragmentDescription: Column() /* TODO: add content */
+);
+
+const cpr = TreatmentContent(
+  name: 'Reanimation',
+  fragmentDescription: Column() /* TODO: add content */
+);
+
+const pseudocroup = TreatmentContent(
+  name: 'Pseudokrupp',
+  fragmentDescription: Column() /* TODO: add content */
+);
+
 const List<TreatmentContent> treatments = [
   acs,
   anaphylaxie,
+  bradycardia,
+  cpr,
+  pseudocroup,
 ];
