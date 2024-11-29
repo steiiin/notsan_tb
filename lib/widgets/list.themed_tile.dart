@@ -38,6 +38,7 @@ class ListThemedTile extends StatelessWidget {
       ListThemedTileColor.green => getMixedAccent(context, baseColor, Colors.green),
       ListThemedTileColor.blue => getMixedAccent(context, baseColor, Colors.blue),
       ListThemedTileColor.orange => getMixedAccent(context, baseColor, Colors.yellow),
+      ListThemedTileColor.brightGreen => getMixedAccent(context, baseColor, Colors.lightGreen),
       _ => baseColor,
     };
 
@@ -45,6 +46,7 @@ class ListThemedTile extends StatelessWidget {
       ListThemedTileIcon.double => const Icon(Icons.keyboard_double_arrow_right_rounded, size: 18.0),
       ListThemedTileIcon.arrow => const Icon(Icons.arrow_forward_rounded, size: 18.0),
       ListThemedTileIcon.point => const Icon(Icons.circle, size: 4.0),
+      ListThemedTileIcon.check => const Icon(Icons.check, size: 18.0),
       _ => Icon(Icons.chevron_right_rounded, size: 18.0, color: tileColor),
     };
     final iconWidgetSizePadding = (18.0 - iconWidget.size!) / 2;
@@ -84,6 +86,7 @@ enum ListThemedTileIcon {
   double,
   arrow,
   point,
+  check,
 }
 
 enum ListThemedTileColor {
@@ -92,4 +95,5 @@ enum ListThemedTileColor {
   blue,
   orange,
   green,
+  brightGreen,
 }

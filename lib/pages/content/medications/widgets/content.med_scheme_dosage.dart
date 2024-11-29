@@ -28,9 +28,21 @@ class MedSchemeDosage extends StatelessWidget {
 
     final targetColor = ownColor ?? switch(target) {
       ContentMedDosageTarget.adult => Colors.blue,
+      ContentMedDosageTarget.senior => Colors.orange,
+      ContentMedDosageTarget.youth => Colors.lightGreen,
+      ContentMedDosageTarget.child => Colors.red,
+      ContentMedDosageTarget.infant => Colors.purple,
+      ContentMedDosageTarget.baby => Colors.pink,
+      _ => baseColor,
     };
     final targetText = ownTarget ?? switch(target) {
       ContentMedDosageTarget.adult => 'ERWACHSENE',
+      ContentMedDosageTarget.senior => 'SENIOREN',
+      ContentMedDosageTarget.youth => 'JUGENDLICH',
+      ContentMedDosageTarget.child => 'KINDER',
+      ContentMedDosageTarget.infant => 'KLEINKIND',
+      ContentMedDosageTarget.baby => 'BABY',
+      _ => '',
     };
     final targetStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
       fontWeight: FontWeight.w500,
@@ -43,19 +55,26 @@ class MedSchemeDosage extends StatelessWidget {
       fontFamily: 'Inconsolata',
     );
 
-    return Padding(
-      padding: const EdgeInsets.only(left: 4.0),
-      child: Row(
+    final hideTarget = target == ContentMedDosageTarget.none;
+    final dosageText = Expanded(child:
+      Text(dosage, style: dosageStyle, overflow: TextOverflow.ellipsis)
+    );
+
+    final finalWidget = hideTarget
+    ? dosageText
+    : Row(
         children: [
           SizedBox(
             width: 100.0,
             child: Text(targetText, style: targetStyle),
           ),
-          Expanded(child:
-            Text(dosage, style: dosageStyle, overflow: TextOverflow.ellipsis)
-          ),
+          dosageText
         ],
-      )
+      );
+
+    return Padding(
+      padding: const EdgeInsets.only(left: 4.0),
+      child: finalWidget
     );
 
   }
@@ -63,5 +82,11 @@ class MedSchemeDosage extends StatelessWidget {
 }
 
 enum ContentMedDosageTarget {
+  none,
   adult,
+  senior,
+  youth,
+  child,
+  infant,
+  baby,
 }

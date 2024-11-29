@@ -14,14 +14,22 @@ class ListContraindicationTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    final tileIcon = switch(type) {
+      ListContraindicationTileType.none => ListThemedTileIcon.check,
+      _ => ListThemedTileIcon.normal,
+    };
+    final tileColor = switch(type) {
+      ListContraindicationTileType.intolerance => ListThemedTileColor.blue,
+      ListContraindicationTileType.acute => ListThemedTileColor.red,
+      ListContraindicationTileType.chronic => ListThemedTileColor.orange,
+      ListContraindicationTileType.pediatric => ListThemedTileColor.green,
+      ListContraindicationTileType.none => ListThemedTileColor.brightGreen,
+    };
+
     return ListThemedTile(
       text: text,
-      color: switch(type) {
-        ListContraindicationTileType.intolerance => ListThemedTileColor.blue,
-        ListContraindicationTileType.acute => ListThemedTileColor.red,
-        ListContraindicationTileType.chronic => ListThemedTileColor.orange,
-        ListContraindicationTileType.pediatric => ListThemedTileColor.green,
-      }
+      icon: tileIcon,
+      color: tileColor,
     );
 
   }
@@ -32,4 +40,5 @@ enum ListContraindicationTileType {
   acute,
   chronic,
   pediatric,
+  none,
 }

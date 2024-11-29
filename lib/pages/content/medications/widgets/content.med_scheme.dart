@@ -25,7 +25,9 @@ class ContentMedScheme extends StatelessWidget {
 
     final baseColor = Theme.of(context).colorScheme.surface;
     final typeColor = switch(type) {
-      ContentMedSchemeType.iv => const Color.fromARGB(255, 255, 214, 211),
+      ContentMedSchemeType.iv => Colors.pink,
+      ContentMedSchemeType.im => Colors.lightBlue,
+      _ => Colors.transparent,
     };
 
     final schemeColor = getMixedAccent(context, baseColor, typeColor);
@@ -38,6 +40,14 @@ class ContentMedScheme extends StatelessWidget {
       )
     ) : null;
 
+    final schemeText = switch(type) {
+      ContentMedSchemeType.usage => 'Einsatz',
+      ContentMedSchemeType.iv => 'i.v.',
+      ContentMedSchemeType.im => 'i.m.',
+      ContentMedSchemeType.inhale => 'p.i.',
+      ContentMedSchemeType.none => ''
+    };
+
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, right: 8.0, bottom: 8.0),
       child: Table(
@@ -49,7 +59,7 @@ class ContentMedScheme extends StatelessWidget {
       children: [
         TableRow(
           children: [
-            Text("i.v.",
+            Text(schemeText,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelSmall
             ),
@@ -72,5 +82,9 @@ class ContentMedScheme extends StatelessWidget {
 }
 
 enum ContentMedSchemeType {
+  usage,
   iv,
+  im,
+  inhale,
+  none,
 }

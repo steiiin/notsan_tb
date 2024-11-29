@@ -9,7 +9,6 @@ import 'package:notsan_tb/pages/content/medications/widgets/content.med_scheme_d
 import 'package:notsan_tb/pages/content/medications/widgets/content.med_scheme_dosage.dart';
 import 'package:notsan_tb/pages/content/medications/widgets/list.contraindication_tile.dart';
 import 'package:notsan_tb/pages/content/medications/widgets/list.sideeffect_tile.dart';
-import 'package:notsan_tb/pages/content/medications/widgets/list.sideeffect_countertreat.dart';
 import 'package:notsan_tb/widgets/list.separator.dart';
 
 class MedAdrenalinPage extends MedicationContentPage {
@@ -25,84 +24,147 @@ class MedAdrenalinPage extends MedicationContentPage {
     return MedicationContentPageFrame(
       pageTitle: name,
       pageSubtitle: altnames,
-      listContraindications: const Column(
-        children: [
-          ListContraindicationTile(text: "**Unverträglichkeit** ggb. NSAR (z.B. Ibu, Diclo)", type: ListContraindicationTileType.intolerance),
-          ListSeparator(useSpace: true),
-          ListContraindicationTile(text: "Vd. auf **Innere Blutungen**", type: ListContraindicationTileType.acute),
-          ListContraindicationTile(text: "Vd. auf **Aortensyndrom**", type: ListContraindicationTileType.acute),
-          ListContraindicationTile(text: "**Asthmaanfall**", type: ListContraindicationTileType.acute),
-          ListContraindicationTile(text: "Akute **Magen**- oder **Darmgeschwüre**", type: ListContraindicationTileType.acute),
-          ListSeparator(useSpace: true),
-          ListContraindicationTile(text: "Schwere Nierenfunktionsstörung (**z.B. Dialyse**)", type: ListContraindicationTileType.chronic),
-          ListContraindicationTile(text: "Schwerer Leberschaden (**Leberzirrhose**)", type: ListContraindicationTileType.chronic),
-          ListSeparator(useSpace: true),
-          ListContraindicationTile(text: "**Schwangerschaft** (ab 28. Woche / 6. Monat)", type: ListContraindicationTileType.pediatric),
-          ListContraindicationTile(text: "**Keine Kinder** (<18J durch SAA untersagt)", type: ListContraindicationTileType.pediatric),
-        ],
+      listContraindications: const ListContraindicationTile(
+        text: "**Keine**, wegen Lebensgefahr!", type: ListContraindicationTileType.none
       ),
       listSideeffects: const Column(
         children: [
-          ListSideeffectTile(text: "NSAR-**Allergie**", type: ListSideeffectTileType.critical),
-          ListSideeffectTile(text: "Luftnot (**Asthmaanfall**)", type: ListSideeffectTileType.criticalDeclarative),
-          ListSideeffectTile(text: "Übelkeit, **Erbrechen**", type: ListSideeffectTileType.criticalDeclarative),
-          ListSideeffectTile(text: "Magenschmerzen", type: ListSideeffectTileType.declarative),
-          ListSideeffectTile(text: "Ausschlag", type: ListSideeffectTileType.declarative),
-          ListSideeffectTile(text: "Andere SAA beachten:", type: ListSideeffectTileType.countermeasure),
-          ListSideeffectCounterTreatment(treatment: treatments.anaphylaxie),
-          ListSeparator(),
-          ListSideeffectTile(text: "Erhöhte **Blutungsneigung**")
+          ListSideeffectTile(text: "**Herzfrequenzanstieg**", type: ListSideeffectTileType.critical),
+          ListSideeffectTile(text: "**Blutdruckanstieg**", type: ListSideeffectTileType.critical),
+          ListSideeffectTile(text: "**Angina Pectoris** (durch erhöhten Sauerstoffbedarf am Herzen)", type: ListSideeffectTileType.critical),
+          ListSideeffectTile(text: "Herzrythmusstörungen", type: ListSideeffectTileType.normal),
+          ListSideeffectTile(text: "Angst & Unruhe", type: ListSideeffectTileType.normal),
+          ListSideeffectTile(text: "Anwendung unterbrechen.", type: ListSideeffectTileType.countermeasure),
+          ListSideeffectTile(text: "Wirkende abwarten. *(Wenige Sekunden)*", type: ListSideeffectTileType.countermeasure),
         ],
       ),
       mapDosages: const {
         treatments.cpr: Column(
           children: [
-
+            ContentMedPackage(
+              type: MedicationPackageType.singleAmpoule,
+              title: "Ampulle 'Adrenalin'",
+              incredients: '`1mg / 1ml`'
+            ),
+            ListSeparator(),
+            ContentMedScheme(
+              type: ContentMedSchemeType.usage,
+              children: [
+                MedSchemeDescription(
+                  '# Schockbar (VF, VT) \n'
+                  'Nach dem 3. erfolglosen Schock'
+                ),
+                SizedBox(height: 4.0),
+                MedSchemeDescription(
+                  '# Nicht Schockbar (PEA, Asystolie) \n'
+                  'So Schnell, wie möglich.'
+                )
+              ]
+            ),
+            ContentMedScheme(
+              type: ContentMedSchemeType.iv,
+              children: [
+                MedSchemeDosage('1mg (Ampulle)', target: ContentMedDosageTarget.adult),
+                ListSeparator(noIndent: true),
+                MedSchemeDescription(
+                  '# Bei Kindern: \n'
+                  'Auf `20ml` **NaCl** aufziehen, dann:'
+                ),
+                MedSchemeDosage('0,01mg / kgKG', target: ContentMedDosageTarget.child),
+                MedSchemeDosage('   1ml / 5kgKG', target: ContentMedDosageTarget.child, ownTarget: '')
+              ]
+            )
           ],
         ),
         treatments.bradycardia: Column(
           children: [
             ContentMedPackage(
-              type: MedicationPackageType.vialWithAmpoule,
-              title: "Durchstechflasche 'Aspirin'",
-              incredients:
-                "`500mg` Pulver \\\n"
-                "`+ 5ml` Wasser z. Aufziehen"
+              type: MedicationPackageType.singleAmpoule,
+              title: "Ampulle 'Adrenalin'",
+              incredients: '`1mg / 1ml`'
             ),
             ListSeparator(),
             ContentMedScheme(
               type: ContentMedSchemeType.iv,
               children: [
-                MedSchemeDosage('500mg (½ Flasche)', target: ContentMedDosageTarget.adult),
+                MedSchemeDosage('2-10µg / min', target: ContentMedDosageTarget.none),
                 ListSeparator(noIndent: true),
                 MedSchemeDescription(
-                  'Langsam spritzen.'
-                )
+                  '# Perfusor benutzen: \n'
+                  'Auf `50ml` **NaCl** aufziehen:'
+                ),
+                MedSchemeDosage('= 20µg / ml', target: ContentMedDosageTarget.none),
+                ListSeparator(noIndent: true),
+                MedSchemeDosage('0,1 - 0,5ml / min', target: ContentMedDosageTarget.none),
+                MedSchemeDosage('  6 -  30ml / h', target: ContentMedDosageTarget.none),
+                ListSeparator(noIndent: true),
+                MedSchemeDescription(
+                  'Herzfrequenz *minütlich* **kontrollieren**, \n'
+                  'Laufrate **korrigieren**.'
+                ),
               ]
-            ),
-          ]
+            )
+          ],
         ),
         treatments.anaphylaxie: Column(
-          children: [],
+          children: [
+            ContentMedPackage(
+              type: MedicationPackageType.singleAmpoule,
+              title: "Ampulle 'Adrenalin'",
+              incredients: '`1mg / 1ml`'
+            ),
+            ListSeparator(),
+            ContentMedScheme(
+              type: ContentMedSchemeType.im,
+              children: [
+                MedSchemeDosage(' 0,5mg (½ Ampulle)', target: ContentMedDosageTarget.adult, ownTarget: 'AB 12 JAHREN'),
+                MedSchemeDosage(' 0,3mg', target: ContentMedDosageTarget.senior, ownTarget: 'KIND (6-12 J.)'),
+                MedSchemeDosage('0,15mg', target: ContentMedDosageTarget.child, ownTarget: 'KIND (< 6 J.)'),
+                ListSeparator(noIndent: true),
+                MedSchemeDescription(
+                  '`1ml`-Spritze verwenden! \\\n'
+                  'Nicht benötigte Menge vor Applikation **verwerfen**.'
+                ),
+                ListSeparator(noIndent: true),
+                MedSchemeDescription(
+                  'Repetition nach **5min** möglich.'
+                ),
+              ]
+            )
+          ],
         ),
         treatments.pseudocroup: Column(
-          children: [],
-        )
+          children: [
+            ContentMedPackage(
+              type: MedicationPackageType.singleAmpoule,
+              title: "Ampulle 'Adrenalin'",
+              incredients: '`1mg / 1ml`'
+            ),
+            ListSeparator(),
+            ContentMedScheme(
+              type: ContentMedSchemeType.inhale,
+              children: [
+                MedSchemeDosage('2mg (2 Ampullen)', target: ContentMedDosageTarget.none, ownColor: Colors.red),
+                MedSchemeDescription(
+                  'In **Verneblungsmaske** `+2ml` NaCl'
+                ),
+              ]
+            )
+          ],
+        ),
       },
-      pharmOnset: '~ **3 min**',
-      pharmDuration: '~ **bis 7 Tage** (Blutgerinnung)',
+      pharmOnset: '~ **30s**',
+      pharmDuration: '~ **2min**',
       principle:
-        "### Nichtsteroidales Antirheumatikum (NSAR) \n"
-        'Ihr Hauptwirkmechanismus besteht in der irreversiblen Hemmung der Cyclooxygenasen (COX-1 und COX-2).'
-        'Dadurch wird die Bildung von Prostaglandinen gehemmt, die an Entzündungsreaktionen, Schmerzempfindung und Fieber beteiligt sind.'
-        'Besonders relevant für die Notfallmedizin ist die **dauerhafte Hemmung der Thrombozytenaggregation** durch die Blockade von COX-1 in den Thrombozyten. \n\n'
-        'Die Hemmung der Thrombozytenaggregation bewirkt eine **verminderte Bildung von Thromboxan A2**, einem Stoff, der Thrombozyten aktiviert und die Vasokonstriktion fördert.'
-        'Dieser Effekt ist irreversibel und hält über die Lebensdauer der Thrombozyten (7–10 Tage) an.'
-        'Dies macht ASS zu einem zentralen Medikament bei der **akuten Behandlung von Myokardinfarkten** und anderen thromboembolischen Ereignissen. \n\n'
-        'Darüber hinaus hat ASS entzündungshemmende, schmerzlindernde und fiebersenkende Eigenschaften.'
-        'Diese Effekte treten bei höheren Dosierungen auf und sind weniger spezifisch in der Notfallmedizin.'
-        'Der Einsatz von ASS erfordert jedoch besondere Vorsicht, da es bei Überdosierung oder bei prädisponierten Patienten zu **Magen-Darm-Blutungen** und anderen Nebenwirkungen kommen kann.'
-    );
+        '### Gehört zu den **Katecholaminen** \n'
+        'Adrenalin wirkt als körpereigenes Hormon und Neurotransmitter.'
+        'Es bindet an **alpha- und beta-Adrenozeptoren** und entfaltet so seine vielseitigen Effekte auf das Herz-Kreislauf-System, die Bronchien und den Stoffwechsel. '
+        'Besonders in der Notfallmedizin wird Adrenalin wegen seiner **starken stimulierenden Wirkung auf das Herz** und seiner Fähigkeit, den Blutdruck zu stabilisieren, eingesetzt. \n\n'
+        'Die Wirkung von Adrenalin ist dosisabhängig: Bei niedrigen Dosierungen überwiegen die **beta-adrenergen Effekte**, wie eine Erhöhung der Herzfrequenz (**positiv chronotrop**) und der Kontraktionskraft (**positiv inotrop**), sowie eine **Bronchodilatation** durch Stimulation der β2-Rezeptoren.'
+        'Bei höheren Dosierungen dominieren die **alpha-adrenergen Effekte**, die eine Vasokonstriktion bewirken und damit den peripheren Widerstand und den Blutdruck erhöhen. Diese duale Wirkung macht Adrenalin unverzichtbar in der Behandlung von **kardiogenem Schock**, **Reanimationssituationen** und **anaphylaktischem Schock**. \n\n'
+        'Neben seinen kardiovaskulären Wirkungen hat Adrenalin auch **metabolische Effekte**, wie die Förderung der Glykogenolyse und Lipolyse, um die Energiebereitstellung zu steigern. '
+        'Die Anwendung erfordert allerdings Vorsicht, da es bei zu hohen Dosierungen zu **Tachykardien**, **Arrhythmien** und einer übermäßigen Myokardbelastung kommen kann. '
+      );
 
   }
 }
